@@ -1,13 +1,17 @@
 package com.eightbitstechnology.userroledrawer.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.eightbitstechnology.userroledrawer.MyApp
+import com.eightbitstechnology.userroledrawer.data.model.User
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val userDao = (application as MyApp).database.userDao()
+
+
+    suspend fun getUserByUsername(username: String): User? {
+        return userDao.getUserByUsername(username)
     }
-    val text: LiveData<String> = _text
+
 }
